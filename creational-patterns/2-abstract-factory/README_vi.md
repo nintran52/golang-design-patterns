@@ -42,7 +42,7 @@ _Các nhóm sản phẩm và các biến thể của chúng._
 
 Bạn cần một cách để tạo ra các object nội thất riêng lẻ sao cho chúng phù hợp với các object khác trong cùng một nhóm sản phẩm. Khách hàng sẽ rất tức giận nếu họ nhận được các món nội thất không đồng bộ với nhau.
 
-![alt text](image-2.png)
+![alt text](images/image-2.png)
 
 _Một chiếc sofa phong cách hiện đại (Modern) sẽ không phù hợp với những chiếc ghế phong cách cổ điển (Victorian)._
 
@@ -58,7 +58,7 @@ Ví dụ:
 - Tất cả các biến thể của Chair sẽ triển khai Chair interface.
 - Tất cả các biến thể của CoffeeTable sẽ triển khai CoffeeTable interface, và tương tự với các sản phẩm khác.
 
-![alt text](image-3.png)
+![alt text](images/image-3.png)
 
 _Tất cả các biến thể của cùng một loại object phải được chuyển vào một hệ thống class hierarchy duy nhất._
 
@@ -66,7 +66,7 @@ Bước tiếp theo là khai báo Abstract Factory—một interface chứa danh
 
 Các phương thức này phải trả về các kiểu sản phẩm trừu tượng, được đại diện bởi các interface mà chúng ta đã trích xuất trước đó, chẳng hạn: Chair, Sofa, CoffeeTable, v.v.
 
-![alt text](image-4.png)
+![alt text](images/image-4.png)
 
 _Mỗi concrete factory sẽ tương ứng với một biến thể cụ thể của sản phẩm._
 
@@ -74,7 +74,7 @@ Bây giờ, còn các biến thể sản phẩm thì sao? Đối với mỗi bi�
 
 Mã phía client phải làm việc với cả các factory và các product thông qua các abstract interface tương ứng. Điều này cho phép bạn thay đổi kiểu factory mà bạn truyền vào mã client, cũng như thay đổi biến thể sản phẩm mà mã client nhận được, mà không làm ảnh hưởng đến mã client hiện có.
 
-![alt text](image-5.png)
+![alt text](images/image-5.png)
 
 _Client không cần quan tâm đến class cụ thể của factory mà nó đang làm việc._
 
@@ -85,7 +85,7 @@ Có một điều cần làm rõ: nếu client chỉ làm việc với các abst
 ## 4. Structure
 [⬆ Back to Table of Contents](#table-of-contents)
 
-![alt text](image-6.png)
+![alt text](images/image-6.png)
 
 1. Abstract Products
 
@@ -477,8 +477,8 @@ func main() {
 ## 6. Golang Code
 [⬆ Back to Table of Contents](#table-of-contents)
 
-- [Normal](normal/main.go)
-- [Pattern](pattern/main.go)
+- [Normal Code](normal/main.go)
+- [Pattern Code](pattern/main.go)
 
 ## 7. Applicability
 [⬆ Back to Table of Contents](#table-of-contents)
