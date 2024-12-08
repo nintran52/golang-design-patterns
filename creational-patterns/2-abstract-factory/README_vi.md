@@ -1,4 +1,5 @@
 # Abstract Factory
+[⬆ Back](README.md)
 
 Cre: https://refactoring.guru/design-patterns/abstract-factory
 
@@ -89,7 +90,7 @@ Có một điều cần làm rõ: nếu client chỉ làm việc với các abst
 
 1. Abstract Products
 
-Các Abstract Products khai báo các interface cho một tập hợp các sản phẩm riêng biệt nhưng có liên quan, tạo thành một nhóm sản phẩm (product family).
+- Các Abstract Products khai báo các interface cho một tập hợp các sản phẩm riêng biệt nhưng có liên quan, tạo thành một nhóm sản phẩm (product family).
 
 ```golang
 // Chair interface
@@ -114,7 +115,7 @@ type CoffeeTable interface {
 2. Concrete Products
 [⬆ Back to Table of Contents](#table-of-contents)
 
-Concrete Products là các triển khai khác nhau của các abstract products, được nhóm lại theo từng biến thể. Mỗi abstract product (ghế/sofa) phải được triển khai trong tất cả các biến thể đã cho (Victorian/Modern).
+- Concrete Products là các triển khai khác nhau của các abstract products, được nhóm lại theo từng biến thể. Mỗi abstract product (ghế/sofa) phải được triển khai trong tất cả các biến thể đã cho (Victorian/Modern).
 
 Modern Products
 
@@ -192,7 +193,7 @@ func (v *VictorianCoffeeTable) GetDescription() string {
 
 3. Abstract Factory
 
-Interface khai báo một tập hợp các methods để tạo ra từng abstract product.
+- Interface khai báo một tập hợp các methods để tạo ra từng abstract product.
 
 ```golang
 // Abstract Factory interface
@@ -205,7 +206,7 @@ type FurnitureFactory interface {
 
 4. Concrete Factories
 
-Concrete Factories triển khai các creation methods của abstract factory. Mỗi concrete factory tương ứng với một biến thể cụ thể của sản phẩm và chỉ tạo ra các biến thể sản phẩm đó.
+- Concrete Factories triển khai các creation methods của abstract factory. Mỗi concrete factory tương ứng với một biến thể cụ thể của sản phẩm và chỉ tạo ra các biến thể sản phẩm đó.
 
 Modern Furniture Factory
 
