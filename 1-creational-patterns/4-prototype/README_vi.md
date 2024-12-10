@@ -1,4 +1,4 @@
-# Name
+# Prototype
 [⬆ Back](README.md)
 
 **Còn được gọi là**:  Clone
@@ -12,7 +12,7 @@ Popularity: &#9733; &#9733; &#9734;
 ---
 
 ## Table of Contents
-- [Name](#name)
+- [Prototype](#prototype)
   - [Table of Contents](#table-of-contents)
   - [1. Intent](#1-intent)
   - [2. Problem](#2-problem)
