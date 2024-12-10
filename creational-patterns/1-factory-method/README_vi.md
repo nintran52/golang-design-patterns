@@ -137,6 +137,7 @@ Mã sử dụng factory method (thường được gọi là client code) không
 - Nơi sử dụng Factory method
 
 ## 5. Cách triển khai (How to Implement)
+[⬆ Back to Table of Contents](#table-of-contents)
 
 1. Make all products follow the same interface
 
@@ -297,8 +298,13 @@ func (l *LogisticsWithDefault) PlanDelivery() {
 ```
 
 ## 6. Golang code
+[⬆ Back to Table of Contents](#table-of-contents)
+
+- [Normal Code](normal/main.go)
+- [Pattern Code](pattern/main.go)
 
 ## 7. Tính ứng dụng (Applicability)
+[⬆ Back to Table of Contents](#table-of-contents)
 
 - Sử dụng Factory Method khi bạn không biết trước các loại đối tượng cụ thể và các phụ thuộc của chúng mà mã của bạn cần làm việc.
 
@@ -334,6 +340,8 @@ func (l *LogisticsWithDefault) PlanDelivery() {
   - Do đó, bạn cần một phương thức thông thường, có khả năng tạo ra các đối tượng mới cũng như tái sử dụng các đối tượng hiện có. Điều này nghe rất giống một factory method.
 
 ## 8. Pros and Cons
+[⬆ Back to Table of Contents](#table-of-contents)
+
 - Pros
   - Bạn tránh được sự phụ thuộc chặt chẽ (tight coupling) giữa lớp creator và các sản phẩm cụ thể.
   - Nguyên tắc Trách nhiệm Đơn lẻ (Single Responsibility Principle): Bạn có thể di chuyển mã tạo sản phẩm vào một nơi duy nhất trong chương trình, giúp mã dễ dàng bảo trì hơn.
@@ -342,6 +350,7 @@ func (l *LogisticsWithDefault) PlanDelivery() {
   - Mã có thể trở nên phức tạp hơn vì bạn cần tạo thêm nhiều lớp con mới để triển khai mẫu thiết kế này. Trường hợp tốt nhất là khi bạn áp dụng mẫu thiết kế này vào một hệ thống đã có sẵn cấu trúc phân cấp các lớp creator.
 
 ## 9. Relations with Other Patterns
+[⬆ Back to Table of Contents](#table-of-contents)
 
 - Nhiều thiết kế bắt đầu bằng cách sử dụng Factory Method (ít phức tạp hơn và dễ tùy chỉnh thông qua các lớp con) và dần phát triển thành Abstract Factory, Prototype, hoặc Builder (linh hoạt hơn nhưng cũng phức tạp hơn).
 
