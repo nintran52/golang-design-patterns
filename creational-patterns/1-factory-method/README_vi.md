@@ -1,8 +1,7 @@
 # Factory Method
-**Còn được biết đến như**: Virtual Constructor
-
 [⬆ Back](README.md)
 
+**Còn được gọi là**: Virtual Constructor
 
 Cre: https://refactoring.guru/design-patterns/factory-method
 
