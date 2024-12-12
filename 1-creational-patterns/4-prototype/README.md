@@ -1,4 +1,4 @@
-# Factory Method
+# Prototype
 
 [⬆ Back](../../README.md)
 

@@ -35,6 +35,7 @@ Abstract Factory là một creational design pattern cho phép bạn tạo ra c�
 Hãy tưởng tượng rằng bạn đang tạo một trình mô phỏng cửa hàng nội thất. Mã của bạn bao gồm các class đại diện cho:
 
 1. Một nhóm sản phẩm có liên quan, chẳng hạn: Chair, Sofa, và CoffeeTable.
+
 2. Nhiều biến thể của nhóm sản phẩm này. Ví dụ, các sản phẩm Chair, Sofa, và CoffeeTable có sẵn với các biến thể sau: Modern, Victorian, và ArtDeco.
 
 ![alt text](images/image-1.png)
@@ -89,7 +90,6 @@ Có một điều cần làm rõ: nếu client chỉ làm việc với các abst
 ![alt text](images/image-6.png)
 
 1. Abstract Products
-
 - Các Abstract Products khai báo các interface cho một tập hợp các sản phẩm riêng biệt nhưng có liên quan, tạo thành một nhóm sản phẩm (product family).
 
 ```golang
@@ -113,8 +113,6 @@ type CoffeeTable interface {
 ```
 
 2. Concrete Products
-[⬆ Back to Table of Contents](#table-of-contents)
-
 - Concrete Products là các triển khai khác nhau của các abstract products, được nhóm lại theo từng biến thể. Mỗi abstract product (ghế/sofa) phải được triển khai trong tất cả các biến thể đã cho (Victorian/Modern).
 
 Modern Products
@@ -265,29 +263,48 @@ func (v *VictorianFurnitureFactory) CreateCoffeeTable() CoffeeTable {
 
 - Khai báo các abstract product interfaces cho từng loại sản phẩm.
 
+3. Declare the abstract factory interface
+
+- Khai báo abstract factory interface để tạo tất cả các loại sản phẩm.
+
+4. Implement a set of concrete factory classes
+
+- Tạo các concrete factory class, mỗi class tương ứng với một biến thể sản phẩm.
+
+5. Create factory initialization code
+
+- Tạo mã khởi tạo factory để khởi tạo concrete factory class dựa trên cấu hình hoặc môi trường.
+
+
+6. Replace direct product constructors with factory methods
+
+- Tìm tất cả các lời gọi trực tiếp đến product constructors và thay thế chúng bằng các factory methods.
+
+**Tóm tắt từng bước**
+
+1. Abstract Product Interfaces: Khai báo các interface như Chair, Sofa, CoffeeTable.
+
 ```golang
 // Chair interface
 type Chair interface {
-	SitOn()
-	GetDescription() string
+	SitOn()         // Method to define how the chair is used
+	GetDescription() string // Method to get the description of the chair
 }
 
 // Sofa interface
 type Sofa interface {
-	LayOn()
-	GetDescription() string
+	LayOn()         // Method to define how the sofa is used
+	GetDescription() string // Method to get the description of the sofa
 }
 
 // CoffeeTable interface
 type CoffeeTable interface {
-	PlaceItems()
-	GetDescription() string
+	PlaceItems()    // Method to place items on the table
+	GetDescription() string // Method to get the description of the coffee table
 }
 ```
 
-3. Declare the abstract factory interface
-
-- Khai báo abstract factory interface để tạo tất cả các loại sản phẩm.
+2. Abstract Factory Interface: Khai báo FurnitureFactory với các phương thức tạo CreateChair, CreateSofa, CreateCoffeeTable.
 
 ```golang
 // Abstract Factory interface
@@ -298,11 +315,10 @@ type FurnitureFactory interface {
 }
 ```
 
-4. Implement a set of concrete factory classes
+3. Concrete Factories: Tạo các lớp như ModernFurnitureFactory, VictorianFurnitureFactory.
 
-- Tạo các concrete factory class, mỗi class tương ứng với một biến thể sản phẩm.
-- Modern Furniture Factory
-
+Modern Furniture Factory
+  
 ```golang
 // ModernFurnitureFactory class
 type ModernFurnitureFactory struct{}
@@ -318,9 +334,9 @@ func (m *ModernFurnitureFactory) CreateSofa() Sofa {
 func (m *ModernFurnitureFactory) CreateCoffeeTable() CoffeeTable {
 	return &ModernCoffeeTable{}
 }
-```
+``` 
 
-- Victorian Furniture Factory
+Victorian Furniture Factory
 
 ```golang
 // VictorianFurnitureFactory class
@@ -339,30 +355,9 @@ func (v *VictorianFurnitureFactory) CreateCoffeeTable() CoffeeTable {
 }
 ```
 
-5. Create factory initialization code
+4. Concrete Products: Tạo các lớp như ModernChair, VictorianSofa.
 
-- Tạo mã khởi tạo factory để khởi tạo concrete factory class dựa trên cấu hình hoặc môi trường.
-
-```golang
-func GetFactory(style string) FurnitureFactory {
-	switch style {
-	case "modern":
-		return &ModernFurnitureFactory{}
-	case "victorian":
-		return &VictorianFurnitureFactory{}
-	default:
-		panic("Unknown style!")
-	}
-}
-```
-
-6. Replace direct product constructors with factory methods
-
-- Tìm tất cả các lời gọi trực tiếp đến product constructors và thay thế chúng bằng các factory methods.
-
-Concrete Products
-
-- Modern Products:
+Modern Products:
 
 ```golang
 // ModernChair
@@ -436,7 +431,22 @@ func (v *VictorianCoffeeTable) GetDescription() string {
 }
 ```
 
-7.  Client code
+5. Factory Initialization: Tạo hàm GetFactory để chọn factory dựa trên cấu hình.
+
+```golang
+func GetFactory(style string) FurnitureFactory {
+	switch style {
+	case "modern":
+		return &ModernFurnitureFactory{}
+	case "victorian":
+		return &VictorianFurnitureFactory{}
+	default:
+		panic("Unknown style!")
+	}
+}
+```
+
+6. Client Code: Mã client sử dụng factory để tạo các sản phẩm mà không cần biết chi tiết cụ thể.
 
 ```golang
 func main() {
@@ -460,20 +470,6 @@ func main() {
 	fmt.Println(table.GetDescription())
 }
 ```
-
-**Tóm tắt từng bước**
-
-1. Abstract Product Interfaces: Khai báo các interface như Chair, Sofa, CoffeeTable.
-
-2. Abstract Factory Interface: Khai báo FurnitureFactory với các phương thức tạo CreateChair, CreateSofa, CreateCoffeeTable.
-
-3. Concrete Factories: Tạo các lớp như ModernFurnitureFactory, VictorianFurnitureFactory.
-
-4. Concrete Products: Tạo các lớp như ModernChair, VictorianSofa.
-
-5. Factory Initialization: Tạo hàm GetFactory để chọn factory dựa trên cấu hình.
-
-6. Client Code: Mã client sử dụng factory để tạo các sản phẩm mà không cần biết chi tiết cụ thể.
 
 ## 6. Golang Code
 [⬆ Back to Table of Contents](#table-of-contents)

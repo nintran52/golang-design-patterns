@@ -1,4 +1,4 @@
-# Name
+# Builder
 [⬆ Back](README.md)
 
 Cre: 
@@ -10,17 +10,17 @@ Popularity: &#9733; &#9733; &#9733;
 ---
 
 ## Table of Contents
-- [Name](#name)
-	- [Table of Contents](#table-of-contents)
-	- [1. Intent](#1-intent)
-	- [2. Problem](#2-problem)
-	- [3. Solution](#3-solution)
-	- [4. Structure](#4-structure)
-	- [5. How to Implement](#5-how-to-implement)
-	- [6. Golang Code](#6-golang-code)
-	- [7. Applicability](#7-applicability)
-	- [8. Pros and Cons](#8-pros-and-cons)
-	- [9. Relations with Other Patterns](#9-relations-with-other-patterns)
+- [Builder](#builder)
+  - [Table of Contents](#table-of-contents)
+  - [1. Intent](#1-intent)
+  - [2. Problem](#2-problem)
+  - [3. Solution](#3-solution)
+  - [4. Structure](#4-structure)
+  - [5. How to Implement](#5-how-to-implement)
+  - [6. Golang Code](#6-golang-code)
+  - [7. Applicability](#7-applicability)
+  - [8. Pros and Cons](#8-pros-and-cons)
+  - [9. Relations with Other Patterns](#9-relations-with-other-patterns)
 
 ## 1. Intent
 [⬆ Back to Table of Contents](#table-of-contents)
@@ -80,7 +80,7 @@ Trong trường hợp này, bạn có thể tạo ra nhiều lớp builder khác
 
 Ví dụ, hãy tưởng tượng một builder xây dựng mọi thứ bằng gỗ và kính, một builder khác xây dựng mọi thứ bằng đá và sắt, và một builder thứ ba sử dụng vàng và kim cương. Bằng cách gọi cùng một tập hợp các bước, bạn có thể nhận được một ngôi nhà bình thường từ builder đầu tiên, một lâu đài nhỏ từ builder thứ hai và một cung điện từ builder thứ ba. Tuy nhiên, điều này chỉ hoạt động nếu mã client gọi các bước xây dựng có thể tương tác với các builder thông qua một interface chung.
 
-Director
+**Director**
 
 Bạn có thể tiến xa hơn và tách một loạt lệnh gọi tới các bước xây dựng mà bạn sử dụng để tạo sản phẩm vào một lớp riêng biệt được gọi là director. Director xác định thứ tự thực thi các bước xây dựng, trong khi builder cung cấp cách triển khai cho các bước đó.
 

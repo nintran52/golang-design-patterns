@@ -5,11 +5,11 @@ A collection of commonly used **Design Patterns** in software development. This 
 ## Table of Contents
 
 ### Creational Patterns
-- [Factory Method](creational-patterns/1-factory-method/README.md)
-- [Abstract Factory](creational-patterns/2-abstract-factory/README.md)
-- [Builder](./creational/builder/README.md)
-- [Prototype](./creational/prototype/README.md)
-- [Singleton](./creational/singleton/README.md)
+- [Factory Method](1-creational-patterns/1-factory-method/README.md)
+- [Abstract Factory](1-creational-patterns/2-abstract-factory/README.md)
+- [Builder](1-creational-patterns/3-builder/README.md)
+- [Prototype](1-creational-patterns/4-prototype/README.md)
+- [Singleton](1-creational-patterns/5-singleton/README.md)
 
 ### Structural Patterns
 - [Adapter](./structural/adapter/README.md)
