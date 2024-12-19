@@ -2,61 +2,79 @@ package main
 
 import "fmt"
 
-// ModernChair
-type ModernChair struct{}
+// Không sử dụng pattern: Code sẽ trực tiếp tạo các sản phẩm mà không có các lớp abstract hoặc factory.
 
-func (m *ModernChair) SitOn() {
-	fmt.Println("Sitting on a modern chair.")
+// Sản phẩm cụ thể: AdidasShoe, NikeShoe, AdidasShirt, NikeShirt
+
+type Shoe struct {
+	logo string
+	size int
 }
 
-// VictorianChair
-type VictorianChair struct{}
-
-func (v *VictorianChair) SitOn() {
-	fmt.Println("Sitting on a Victorian chair.")
+type Shirt struct {
+	logo string
+	size int
 }
 
-// ModernSofa
-type ModernSofa struct{}
-
-func (m *ModernSofa) LayOn() {
-	fmt.Println("Lying on a modern sofa.")
+// Tạo trực tiếp các sản phẩm Adidas
+func newAdidasShoe() *Shoe {
+	return &Shoe{
+		logo: "adidas",
+		size: 14,
+	}
 }
 
-// VictorianSofa
-type VictorianSofa struct{}
-
-func (v *VictorianSofa) LayOn() {
-	fmt.Println("Lying on a Victorian sofa.")
+func newAdidasShirt() *Shirt {
+	return &Shirt{
+		logo: "adidas",
+		size: 14,
+	}
 }
 
+// Tạo trực tiếp các sản phẩm Nike
+func newNikeShoe() *Shoe {
+	return &Shoe{
+		logo: "nike",
+		size: 14,
+	}
+}
+
+func newNikeShirt() *Shirt {
+	return &Shirt{
+		logo: "nike",
+		size: 14,
+	}
+}
+
+// Mã client
 func main() {
-	style := "modern" // Change to "victorian" for Victorian style
+	// Tạo sản phẩm trực tiếp mà không thông qua factory
+	adidasShoe := newAdidasShoe()
+	adidasShirt := newAdidasShirt()
 
-	var chair interface{}
-	var sofa interface{}
+	nikeShoe := newNikeShoe()
+	nikeShirt := newNikeShirt()
 
-	// Directly using constructors based on condition
-	if style == "modern" {
-		chair = &ModernChair{}
-		sofa = &ModernSofa{}
-	} else if style == "victorian" {
-		chair = &VictorianChair{}
-		sofa = &VictorianSofa{}
-	} else {
-		panic("Unknown style!")
-	}
+	// In thông tin sản phẩm
+	printShoeDetails(adidasShoe)
+	printShirtDetails(adidasShirt)
 
-	// Using type assertion to call methods (not type-safe)
-	if c, ok := chair.(*ModernChair); ok {
-		c.SitOn()
-	} else if c, ok := chair.(*VictorianChair); ok {
-		c.SitOn()
-	}
-
-	if s, ok := sofa.(*ModernSofa); ok {
-		s.LayOn()
-	} else if s, ok := sofa.(*VictorianSofa); ok {
-		s.LayOn()
-	}
+	printShoeDetails(nikeShoe)
+	printShirtDetails(nikeShirt)
 }
+
+func printShoeDetails(s *Shoe) {
+	fmt.Printf("Shoe Logo: %s\n", s.logo)
+	fmt.Printf("Shoe Size: %d\n", s.size)
+}
+
+func printShirtDetails(s *Shirt) {
+	fmt.Printf("Shirt Logo: %s\n", s.logo)
+	fmt.Printf("Shirt Size: %d\n", s.size)
+}
+
+// Khó khăn khi không sử dụng pattern:
+// 1. Mã kém linh hoạt: Thêm thương hiệu hoặc sản phẩm mới đòi hỏi phải viết thêm nhiều hàm khởi tạo.
+// 2. Nhân bản mã: Logic khởi tạo bị lặp lại, khó bảo trì và dễ xảy ra lỗi.
+// 3. Khó mở rộng: Nếu cần thêm loại sản phẩm mới (ví dụ: quần thể thao), mã sẽ trở nên phức tạp hơn.
+// 4. Thiếu kiểm soát tập trung: Không có nơi tập trung để quản lý việc tạo sản phẩm, gây khó khăn khi cần sửa đổi hoặc mở rộng.

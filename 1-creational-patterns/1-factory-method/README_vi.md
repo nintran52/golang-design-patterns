@@ -142,159 +142,29 @@ Mã sử dụng factory method (thường được gọi là client code) không
 
 - Tạo một giao diện chung cho tất cả các sản phẩm, đảm bảo mỗi sản phẩm triển khai các phương thức chung.
 
-```golang
-package main
-
-import "fmt"
-
-// Transport interface: Common interface for all products
-type Transport interface {
-	Deliver()
-}
-
-```
-
 2. Add an empty factory method inside the creator class
 
 - Tạo một lớp Creator và thêm một phương thức nhà máy (factory method) trống.
 
-- Phương thức này trả về kiểu Transport, là giao diện chung của các sản phẩm.
+- Phương thức này trả về kiểu là giao diện chung của các sản phẩm.
 
-```golang
-// Creator class
-type Logistics interface {
-	CreateTransport() Transport
-	PlanDelivery()
-}
-
-type BaseLogistics struct{}
-
-// Empty factory method
-func (b *BaseLogistics) CreateTransport() Transport {
-	return nil
-}
-
-// PlanDelivery uses the factory method
-func (b *BaseLogistics) PlanDelivery() {
-	transport := b.CreateTransport()
-	if transport != nil {
-		transport.Deliver()
-	} else {
-		fmt.Println("No transport available.")
-	}
-}
-```
-
-3. Replace constructors with calls to the factory method
+1. Replace constructors with calls to the factory method
 
 - Trích xuất mã tạo object vào trong factory method.
 
 - Nếu cần, thêm tham số tạm thời để kiểm soát loại sản phẩm được trả về.
 
-```golang
-// Concrete products
-type Truck struct{}
-
-func (t *Truck) Deliver() {
-	fmt.Println("Delivering by land using a truck.")
-}
-
-type Ship struct{}
-
-func (s *Ship) Deliver() {
-	fmt.Println("Delivering by sea using a ship.")
-}
-
-// Update the factory method to create specific products
-func (b *BaseLogistics) CreateTransport(transportType string) Transport {
-	switch transportType {
-	case "truck":
-		return &Truck{}
-	case "ship":
-		return &Ship{}
-	default:
-		return nil
-	}
-}
-
-```
-
 4. Create a set of creator subclasses
 
-- Tạo các subclass của BaseLogistics cho từng loại product và ghi đè factory method để trả về product phù hợp.
-```golang
-// RoadLogistics creates trucks
-type RoadLogistics struct {
-	BaseLogistics
-}
+- Tạo các subclass cho từng loại product và ghi đè factory method để trả về product phù hợp.
 
-func (r *RoadLogistics) CreateTransport() Transport {
-	return &Truck{}
-}
-
-// SeaLogistics creates ships
-type SeaLogistics struct {
-	BaseLogistics
-}
-
-func (s *SeaLogistics) CreateTransport() Transport {
-	return &Ship{}
-}
-```
 5. Reuse the control parameter if too many product types
 
 - Nếu có nhiều loại product, thay vì tạo subclass riêng cho từng loại, có thể sử dụng tham số điều khiển trong base class để trả về sản phẩm phù hợp.
 
-```golang
-// GroundMail supports both Truck and Train
-type GroundMail struct{}
+6. Make the base factory method abstract or default
 
-func (g *GroundMail) CreateTransport(mode string) Transport {
-	switch mode {
-	case "truck":
-		return &Truck{}
-	case "train":
-		return &Train{}
-	default:
-		return nil
-	}
-}
-
-// Additional product: Train
-type Train struct{}
-
-func (t *Train) Deliver() {
-	fmt.Println("Delivering by rail using a train.")
-}
-```
-
-1. Make the base factory method abstract or default
-
-- Nếu factory method cơ sở (CreateTransport) không còn logic nào, có thể biến nó thành trừu tượng hoặc giữ nó như một hành vi mặc định.
-
-```golang
-// Abstract factory method
-type AbstractLogistics interface {
-	CreateTransport() Transport
-	PlanDelivery()
-}
-
-type LogisticsWithDefault struct{}
-
-func (l *LogisticsWithDefault) CreateTransport() Transport {
-	fmt.Println("Default factory method.")
-	return nil
-}
-
-func (l *LogisticsWithDefault) PlanDelivery() {
-	transport := l.CreateTransport()
-	if transport != nil {
-		transport.Deliver()
-	} else {
-		fmt.Println("No transport available.")
-	}
-}
-```
+- Nếu factory method cơ sở không còn logic nào, có thể biến nó thành trừu tượng hoặc giữ nó như một hành vi mặc định.
 
 ## 6. Golang code
 [⬆ Back to Table of Contents](#table-of-contents)
