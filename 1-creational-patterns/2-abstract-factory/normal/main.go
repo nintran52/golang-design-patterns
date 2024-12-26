@@ -2,79 +2,92 @@ package main
 
 import "fmt"
 
-// Không sử dụng pattern: Code sẽ trực tiếp tạo các sản phẩm mà không có các lớp abstract hoặc factory.
-
-// Sản phẩm cụ thể: AdidasShoe, NikeShoe, AdidasShirt, NikeShirt
-
-type Shoe struct {
+// AdidasShoe: Concrete Product
+type AdidasShoe struct {
 	logo string
 	size int
 }
 
-type Shirt struct {
+// NikeShoe: Concrete Product
+type NikeShoe struct {
 	logo string
 	size int
 }
 
-// Tạo trực tiếp các sản phẩm Adidas
-func newAdidasShoe() *Shoe {
-	return &Shoe{
-		logo: "adidas",
-		size: 14,
-	}
+// AdidasShirt: Concrete Product
+type AdidasShirt struct {
+	logo string
+	size int
 }
 
-func newAdidasShirt() *Shirt {
-	return &Shirt{
-		logo: "adidas",
-		size: 14,
-	}
+// NikeShirt: Concrete Product
+type NikeShirt struct {
+	logo string
+	size int
 }
 
-// Tạo trực tiếp các sản phẩm Nike
-func newNikeShoe() *Shoe {
-	return &Shoe{
-		logo: "nike",
-		size: 14,
-	}
-}
-
-func newNikeShirt() *Shirt {
-	return &Shirt{
-		logo: "nike",
-		size: 14,
-	}
-}
-
-// Mã client
 func main() {
-	// Tạo sản phẩm trực tiếp mà không thông qua factory
-	adidasShoe := newAdidasShoe()
-	adidasShirt := newAdidasShirt()
+	// Khởi tạo giày và áo thun cho Adidas
+	adidasShoe := AdidasShoe{
+		logo: "adidas",
+		size: 14,
+	}
 
-	nikeShoe := newNikeShoe()
-	nikeShirt := newNikeShirt()
+	adidasShirt := AdidasShirt{
+		logo: "adidas",
+		size: 14,
+	}
 
-	// In thông tin sản phẩm
-	printShoeDetails(adidasShoe)
-	printShirtDetails(adidasShirt)
+	// Khởi tạo giày và áo thun cho Nike
+	nikeShoe := NikeShoe{
+		logo: "nike",
+		size: 14,
+	}
 
-	printShoeDetails(nikeShoe)
-	printShirtDetails(nikeShirt)
+	nikeShirt := NikeShirt{
+		logo: "nike",
+		size: 14,
+	}
+
+	// In thông tin chi tiết
+	printShoeDetails(adidasShoe.logo, adidasShoe.size)
+	printShirtDetails(adidasShirt.logo, adidasShirt.size)
+
+	printShoeDetails(nikeShoe.logo, nikeShoe.size)
+	printShirtDetails(nikeShirt.logo, nikeShirt.size)
 }
 
-func printShoeDetails(s *Shoe) {
-	fmt.Printf("Shoe Logo: %s\n", s.logo)
-	fmt.Printf("Shoe Size: %d\n", s.size)
+func printShoeDetails(logo string, size int) {
+	fmt.Printf("Logo: %s\n", logo)
+	fmt.Printf("Size: %d\n", size)
 }
 
-func printShirtDetails(s *Shirt) {
-	fmt.Printf("Shirt Logo: %s\n", s.logo)
-	fmt.Printf("Shirt Size: %d\n", s.size)
+func printShirtDetails(logo string, size int) {
+	fmt.Printf("Logo: %s\n", logo)
+	fmt.Printf("Size: %d\n", size)
 }
 
-// Khó khăn khi không sử dụng pattern:
-// 1. Mã kém linh hoạt: Thêm thương hiệu hoặc sản phẩm mới đòi hỏi phải viết thêm nhiều hàm khởi tạo.
-// 2. Nhân bản mã: Logic khởi tạo bị lặp lại, khó bảo trì và dễ xảy ra lỗi.
-// 3. Khó mở rộng: Nếu cần thêm loại sản phẩm mới (ví dụ: quần thể thao), mã sẽ trở nên phức tạp hơn.
-// 4. Thiếu kiểm soát tập trung: Không có nơi tập trung để quản lý việc tạo sản phẩm, gây khó khăn khi cần sửa đổi hoặc mở rộng.
+/*
+Những khó khăn và nhược điểm:
+
+1. Mã phụ thuộc chặt chẽ vào các class cụ thể:
+   - Mỗi lần thêm một loại sản phẩm hoặc thương hiệu mới, bạn phải sửa đổi mã client, dẫn đến sự phụ thuộc chặt chẽ vào các class cụ thể.
+   - Vi phạm nguyên tắc Open/Closed Principle.
+
+2. Thiếu tính mở rộng:
+   - Nếu có một thương hiệu hoặc sản phẩm mới, mã client sẽ phải cập nhật toàn bộ logic khởi tạo và sử dụng.
+
+3. Mã trùng lặp:
+   - Khởi tạo sản phẩm có thể lặp đi lặp lại tại nhiều nơi trong mã client, dẫn đến mã khó bảo trì.
+
+4. Khó đảm bảo tính đồng bộ:
+   - Không có cơ chế đảm bảo rằng giày và áo thun của cùng một bộ phải thuộc cùng một thương hiệu.
+
+5. Khó kiểm tra và bảo trì:
+   - Khi mã client quá phụ thuộc vào logic khởi tạo cụ thể, việc kiểm tra hoặc sửa đổi sẽ trở nên khó khăn.
+
+6. Tăng độ phức tạp khi mở rộng:
+   - Việc thêm các biến thể sản phẩm hoặc nhóm sản phẩm sẽ dẫn đến sự gia tăng độ phức tạp trong mã client.
+
+Giải pháp tốt hơn: Sử dụng Abstract Factory Pattern để tách biệt logic khởi tạo sản phẩm khỏi mã client và đảm bảo tính đồng bộ giữa các sản phẩm trong cùng một bộ.
+*/

@@ -30,7 +30,7 @@ Popularity: &#9733; &#9733; &#9734;
 
 Composite là một structural design pattern cho phép bạn tổ hợp các đối tượng thành cấu trúc cây và sau đó làm việc với các cấu trúc này như thể chúng là những đối tượng riêng lẻ.
 
-![alt text](image.png)
+![alt text](images/image.png)
 
 ## 2. Problem
 [⬆ Back to Table of Contents](#table-of-contents)
@@ -41,7 +41,7 @@ Ví dụ, hãy tưởng tượng rằng bạn có hai loại đối tượng: Pr
 
 Giả sử bạn quyết định tạo một hệ thống đặt hàng sử dụng các class này. Các đơn hàng có thể chứa các sản phẩm đơn giản không được đóng gói, cũng như các hộp chứa đầy các sản phẩm… và các hộp khác. Làm thế nào bạn có thể xác định tổng giá của một đơn hàng như vậy?
 
-![alt text](image-1.png)
+![alt text](images/image-1.png)
 
 *Một đơn hàng có thể bao gồm nhiều sản phẩm, được đóng gói trong các hộp, và các hộp này lại được đóng gói trong các hộp lớn hơn, và cứ thế tiếp tục. Cấu trúc toàn bộ trông giống như một cây lộn ngược.*
 
@@ -54,7 +54,7 @@ Composite pattern gợi ý rằng bạn làm việc với Products và Boxes th�
 
 Phương thức này hoạt động như thế nào? Đối với một Product, nó chỉ cần trả về giá của sản phẩm. Đối với một Box, nó sẽ duyệt qua từng mục mà hộp chứa, hỏi giá của chúng, sau đó trả về tổng giá của hộp này. Nếu một trong các mục đó là một hộp nhỏ hơn, hộp đó cũng sẽ bắt đầu duyệt qua nội dung của nó và cứ thế tiếp tục, cho đến khi giá của tất cả các thành phần bên trong được tính toán. Một Box thậm chí có thể thêm một số chi phí bổ sung vào giá cuối cùng, chẳng hạn như chi phí đóng gói.
 
-![alt text](image-2.png)
+![alt text](images/image-2.png)
 
 *Composite pattern cho phép bạn thực thi hành vi một cách đệ quy trên tất cả các thành phần của một object tree.*
 
@@ -62,7 +62,7 @@ Lợi ích lớn nhất của cách tiếp cận này là bạn không cần qua
 
 ### Real-World Analogy
 
-![alt text](image-3.png)
+![alt text](images/image-3.png)
 
 *Ví dụ về một structure quân sự.*
 
@@ -71,7 +71,7 @@ Quân đội của hầu hết các quốc gia được tổ chức theo cấu t
 ## 4. Structure
 [⬆ Back to Table of Contents](#table-of-contents)
 
-![alt text](image-4.png)
+![alt text](images/image-4.png)
 
 1. Component: Interface Component mô tả các thao tác chung cho cả các phần tử đơn giản và phức tạp của cây.
 
@@ -101,8 +101,6 @@ Mảng này phải có khả năng chứa cả leaves và containers, vì vậy 
 
 5. Cuối cùng, định nghĩa các phương thức để thêm và xóa các phần tử con trong container.
 - Lưu ý rằng các thao tác này có thể được khai báo trong component interface. Tuy nhiên, điều này có thể vi phạm nguyên tắc Interface Segregation Principle, vì các phương thức này sẽ để trống trong leaf class. Dù vậy, client sẽ có khả năng xử lý tất cả các phần tử theo cùng một cách, ngay cả khi tạo cây.
-
-**Tóm tắt từng bước**
 
 ## 6. Golang Code
 [⬆ Back to Table of Contents](#table-of-contents)

@@ -13,16 +13,16 @@ Popularity: &#9733; &#9733; &#9733;
 
 ## Table of Contents
 - [Factory Method](#factory-method)
-	- [Table of Contents](#table-of-contents)
-	- [1. Mục đích (Intent)](#1-mục-đích-intent)
-	- [2. Vấn đề (Problem)](#2-vấn-đề-problem)
-	- [3. Giải pháp (Solution)](#3-giải-pháp-solution)
-	- [4. Cấu trúc (Structure)](#4-cấu-trúc-structure)
-	- [5. Cách triển khai (How to Implement)](#5-cách-triển-khai-how-to-implement)
-	- [6. Golang code](#6-golang-code)
-	- [7. Tính ứng dụng (Applicability)](#7-tính-ứng-dụng-applicability)
-	- [8. Pros and Cons](#8-pros-and-cons)
-	- [9. Relations with Other Patterns](#9-relations-with-other-patterns)
+  - [Table of Contents](#table-of-contents)
+  - [1. Mục đích (Intent)](#1-mục-đích-intent)
+  - [2. Vấn đề (Problem)](#2-vấn-đề-problem)
+  - [3. Giải pháp (Solution)](#3-giải-pháp-solution)
+  - [4. Cấu trúc (Structure)](#4-cấu-trúc-structure)
+  - [5. Cách triển khai (How to Implement)](#5-cách-triển-khai-how-to-implement)
+  - [6. Golang code](#6-golang-code)
+  - [7. Tính ứng dụng (Applicability)](#7-tính-ứng-dụng-applicability)
+  - [8. Pros and Cons](#8-pros-and-cons)
+  - [9. Relations with Other Patterns](#9-relations-with-other-patterns)
 
 ## 1. Mục đích (Intent)
 [⬆ Back to Table of Contents](#table-of-contents)
@@ -39,35 +39,6 @@ Popularity: &#9733; &#9733; &#9733;
 [⬆ Back to Table of Contents](#table-of-contents)
 
 Hãy tưởng tượng rằng bạn đang tạo một ứng dụng quản lý logistics. Phiên bản ứng dụng đầu tiên của bạn chỉ có thể xử lý việc vận chuyển bằng xe tải, vì vậy phần lớn mã nguồn nằm trong class Truck.
-
-```golang
-package main
-
-import "fmt"
-
-// Truck struct
-type Truck struct{}
-
-func (t *Truck) Deliver() {
-	fmt.Println("Delivery by Truck.")
-}
-
-func PlanDelivery(truck Truck) {
-	truck.Deliver()
-}
-
-func main() {
-	// Create a logistics app that only handles trucks
-	truck := Truck{}
-
-	// Plan a delivery
-	PlanDelivery(truck)
-
-	// Now we need to add support for Ships
-	// This would require rewriting significant portions of the app.
-}
-
-```
 
 Sau một thời gian, ứng dụng của bạn trở nên khá phổ biến. Mỗi ngày, bạn nhận được hàng chục yêu cầu từ các công ty vận tải đường biển để tích hợp chức năng logistics đường biển vào ứng dụng.
 

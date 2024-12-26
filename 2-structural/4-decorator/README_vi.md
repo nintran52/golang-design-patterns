@@ -30,7 +30,7 @@ Popularity: &#9733; &#9733; &#9734;
 
 Decorator là một structural design pattern cho phép bạn gắn các hành vi mới vào các đối tượng bằng cách đặt chúng bên trong các wrapper objects đặc biệt chứa các hành vi đó.
 
-![alt text](image.png)
+![alt text](images/image.png)
 
 ## 2. Problem
 [⬆ Back to Table of Contents](#table-of-contents)
@@ -39,13 +39,13 @@ Hãy tưởng tượng rằng bạn đang làm việc trên một thư viện th
 
 Phiên bản ban đầu của thư viện dựa trên Notifier class, với chỉ vài trường, một constructor, và một phương thức duy nhất là send. Phương thức này có thể nhận một tham số message từ client và gửi thông báo đến danh sách email được truyền qua constructor của Notifier. Một ứng dụng bên thứ ba hoạt động như một client sẽ tạo và cấu hình đối tượng notifier một lần, sau đó sử dụng nó mỗi khi có điều quan trọng xảy ra.
 
-![alt text](image-1.png)
+![alt text](images/image-1.png)
 
 *Một chương trình có thể sử dụng Notifier class để gửi thông báo về các sự kiện quan trọng đến một tập hợp email được định nghĩa trước.*
 
 Sau một thời gian, bạn nhận ra rằng người dùng của thư viện mong muốn nhiều hơn chỉ là thông báo qua email. Nhiều người muốn nhận SMS về các vấn đề nghiêm trọng. Những người khác muốn được thông báo trên Facebook, và tất nhiên, các người dùng doanh nghiệp muốn nhận thông báo qua Slack.
 
-![alt text](image-2.png)
+![alt text](images/image-2.png)
 
 *Mỗi loại thông báo được triển khai như một subclass của Notifier.*
 
@@ -55,7 +55,7 @@ Nhưng sau đó, có ai đó đặt một câu hỏi hợp lý: "Tại sao bạn
 
 Bạn cố gắng giải quyết vấn đề đó bằng cách tạo các subclass đặc biệt kết hợp nhiều phương pháp thông báo trong một lớp. Tuy nhiên, cách tiếp cận này nhanh chóng làm phình to mã nguồn, không chỉ mã của thư viện mà còn cả mã của client.
 
-![alt text](image-3.png)
+![alt text](images/image-3.png)
 
 *Bùng nổ số lượng subclass.*
 
@@ -73,7 +73,7 @@ Một trong những cách để vượt qua những hạn chế này là sử d�
 
 Với cách tiếp cận mới này, bạn có thể dễ dàng thay thế đối tượng "trợ giúp" được liên kết bằng một đối tượng khác, thay đổi hành vi của đối tượng chứa trong runtime. Một đối tượng có thể sử dụng hành vi của nhiều class, bằng cách có tham chiếu đến nhiều đối tượng và ủy thác cho tất cả chúng các công việc khác nhau. Aggregation/Composition là nguyên tắc chính đứng sau nhiều design patterns, bao gồm cả Decorator. Với ý tưởng đó, hãy trở lại thảo luận về pattern.
 
-![alt text](image-4.png)
+![alt text](images/image-4.png)
 
 *Inheritance vs. Aggregation*
 
@@ -85,13 +85,13 @@ Như đã đề cập, wrapper triển khai cùng một interface với đối t
 
 Trong ví dụ về thông báo, hãy giữ hành vi thông báo qua email đơn giản bên trong Notifier class, nhưng chuyển tất cả các phương thức thông báo khác thành decorators.
 
-![alt text](image-5.png)
+![alt text](images/image-5.png)
 
 *Các phương thức thông báo khác nhau trở thành decorators.*
 
 Mã client cần bao bọc một đối tượng notifier cơ bản vào một tập hợp các decorators phù hợp với tùy chọn của client. Các đối tượng kết quả sẽ được cấu trúc như một ngăn xếp (stack).
 
-![alt text](image-6.png)
+![alt text](images/image-6.png)
 
 *Các ứng dụng có thể cấu hình các ngăn xếp phức tạp của các notification decorators.*
 
@@ -101,7 +101,7 @@ Chúng ta có thể áp dụng cách tiếp cận tương tự cho các hành vi
 
 ### Real-World Analogy
 
-![alt text](image-7.png)
+![alt text](images/image-7.png)
 
 *Bạn đạt được hiệu quả kết hợp từ việc mặc nhiều lớp quần áo.*
 
@@ -110,7 +110,7 @@ Mặc quần áo là một ví dụ về việc sử dụng decorators. Khi bạ
 ## 4. Structure
 [⬆ Back to Table of Contents](#table-of-contents)
 
-![alt text](image-8.png)
+![alt text](images/image-8.png)
 
 1. Component: Khai báo interface chung cho cả wrappers và các đối tượng được bao bọc.
 
@@ -145,8 +145,6 @@ Base decorator phải ủy quyền tất cả công việc cho đối tượng �
 Một concrete decorator phải thực thi hành vi của nó trước hoặc sau khi gọi phương thức cha (phương thức này luôn ủy quyền cho đối tượng được bọc).
 
 7. Mã client phải chịu trách nhiệm tạo các decorators và kết hợp chúng theo cách mà client cần.
-
-**Tóm tắt từng bước**
 
 ## 6. Golang Code
 [⬆ Back to Table of Contents](#table-of-contents)

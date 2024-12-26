@@ -99,261 +99,29 @@ Ngoài ra, lớp director hoàn toàn ẩn chi tiết việc xây dựng sản p
 
 1. Builder: Interface của Builder khai báo các bước xây dựng sản phẩm chung cho tất cả các loại builders.
 
-```golang
-// HouseBuilder defines the steps to construct a house
-type HouseBuilder interface {
-    BuildWalls()
-    BuildDoors()
-    BuildWindows()
-    BuildRoof()
-    GetHouse() House
-}
-```
-
 2. Concrete Builders: Cung cấp các triển khai khác nhau cho các bước xây dựng. Các concrete builders có thể tạo ra các sản phẩm không tuân theo giao diện chung.
-
-```golang
-// WoodenHouseBuilder builds a house with wooden materials
-type WoodenHouseBuilder struct {
-    house House
-}
-
-func (b *WoodenHouseBuilder) BuildWalls() {
-    b.house.Walls = "Wooden Walls"
-}
-
-func (b *WoodenHouseBuilder) BuildDoors() {
-    b.house.Doors = "Wooden Doors"
-}
-
-func (b *WoodenHouseBuilder) BuildWindows() {
-    b.house.Windows = "Wooden Windows"
-}
-
-func (b *WoodenHouseBuilder) BuildRoof() {
-    b.house.Roof = "Wooden Roof"
-}
-
-func (b *WoodenHouseBuilder) GetHouse() House {
-    return b.house
-}
-
-// StoneHouseBuilder builds a house with stone materials
-type StoneHouseBuilder struct {
-    house House
-}
-
-func (b *StoneHouseBuilder) BuildWalls() {
-    b.house.Walls = "Stone Walls"
-}
-
-func (b *StoneHouseBuilder) BuildDoors() {
-    b.house.Doors = "Stone Doors"
-}
-
-func (b *StoneHouseBuilder) BuildWindows() {
-    b.house.Windows = "Stone Windows"
-}
-
-func (b *StoneHouseBuilder) BuildRoof() {
-    b.house.Roof = "Stone Roof"
-}
-
-func (b *StoneHouseBuilder) GetHouse() House {
-    return b.house
-}
-```
 
 3. Products: Là các đối tượng kết quả. Các sản phẩm được xây dựng bởi các builders khác nhau không cần phải thuộc cùng một hệ thống phân cấp hoặc giao diện.
 
-```golang
-// House is the complex object being constructed
-type House struct {
-    Walls   string
-    Doors   string
-    Windows string
-    Roof    string
-}
-```
-
 4. Director: Lớp Director định nghĩa thứ tự gọi các bước xây dựng, cho phép bạn tạo và tái sử dụng các cấu hình cụ thể của sản phẩm.
 
-```golang
-// Director defines the construction process
-type Director struct {
-    builder HouseBuilder
-}
-
-func (d *Director) SetBuilder(builder HouseBuilder) {
-    d.builder = builder
-}
-
-func (d *Director) Construct() {
-    d.builder.BuildWalls()
-    d.builder.BuildDoors()
-    d.builder.BuildWindows()
-    d.builder.BuildRoof()
-}
-```
-
 5. Client: Client phải liên kết một trong các đối tượng builder với director. Thông thường, điều này được thực hiện một lần qua các tham số của constructor của director. Sau đó, director sử dụng đối tượng builder đó cho tất cả các lần xây dựng tiếp theo. Ngoài ra, client có thể truyền đối tượng builder vào phương thức sản xuất của director. Trong trường hợp này, bạn có thể sử dụng một builder khác mỗi khi sản xuất một thứ gì đó với director.
-
-```golang
-package main
-
-import "fmt"
-
-func main() {
-    // Create a director
-    director := Director{}
-
-    // Build a wooden house
-    woodenBuilder := &WoodenHouseBuilder{}
-    director.SetBuilder(woodenBuilder)
-    director.Construct()
-    woodenHouse := woodenBuilder.GetHouse()
-    fmt.Println("Wooden House:", woodenHouse)
-
-    // Build a stone house
-    stoneBuilder := &StoneHouseBuilder{}
-    director.SetBuilder(stoneBuilder)
-    director.Construct()
-    stoneHouse := stoneBuilder.GetHouse()
-    fmt.Println("Stone House:", stoneHouse)
-}
-```
 
 ## 5. How to Implement
 [⬆ Back to Table of Contents](#table-of-contents)
 
 1. Đảm bảo rằng bạn có thể định nghĩa rõ ràng các bước xây dựng chung để tạo tất cả các biểu diễn sản phẩm có sẵn. Nếu không, bạn sẽ không thể tiếp tục triển khai mẫu thiết kế này.
 
-```golang
-// HouseBuilder defines the steps to construct a house
-type HouseBuilder interface {
-    BuildWalls()
-    BuildDoors()
-    BuildWindows()
-    BuildRoof()
-    GetHouse() House
-}
-```
-
 2. Khai báo các bước này trong giao diện builder cơ sở.
 
 3. Tạo một lớp builder cụ thể cho từng biểu diễn sản phẩm và triển khai các bước xây dựng của chúng.
 Đừng quên triển khai một phương thức để lấy kết quả xây dựng. Lý do phương thức này không thể được khai báo trong giao diện builder là vì các builders khác nhau có thể tạo ra các sản phẩm không tuân theo cùng một giao diện. Do đó, bạn không biết kiểu trả về của phương thức này là gì. Tuy nhiên, nếu các sản phẩm thuộc cùng một hệ thống phân cấp, phương thức lấy kết quả có thể được thêm an toàn vào giao diện cơ sở.
 
-```golang
-// House is the complex object being constructed
-type House struct {
-    Walls   string
-    Doors   string
-    Windows string
-    Roof    string
-}
-
-// WoodenHouseBuilder builds a house with wooden materials
-type WoodenHouseBuilder struct {
-    house House
-}
-
-func (b *WoodenHouseBuilder) BuildWalls() {
-    b.house.Walls = "Wooden Walls"
-}
-
-func (b *WoodenHouseBuilder) BuildDoors() {
-    b.house.Doors = "Wooden Doors"
-}
-
-func (b *WoodenHouseBuilder) BuildWindows() {
-    b.house.Windows = "Wooden Windows"
-}
-
-func (b *WoodenHouseBuilder) BuildRoof() {
-    b.house.Roof = "Wooden Roof"
-}
-
-func (b *WoodenHouseBuilder) GetHouse() House {
-    return b.house
-}
-
-// StoneHouseBuilder builds a house with stone materials
-type StoneHouseBuilder struct {
-    house House
-}
-
-func (b *StoneHouseBuilder) BuildWalls() {
-    b.house.Walls = "Stone Walls"
-}
-
-func (b *StoneHouseBuilder) BuildDoors() {
-    b.house.Doors = "Stone Doors"
-}
-
-func (b *StoneHouseBuilder) BuildWindows() {
-    b.house.Windows = "Stone Windows"
-}
-
-func (b *StoneHouseBuilder) BuildRoof() {
-    b.house.Roof = "Stone Roof"
-}
-
-func (b *StoneHouseBuilder) GetHouse() House {
-    return b.house
-}
-```
-
 4. Cân nhắc việc tạo một lớp director. Nó có thể đóng gói các cách xây dựng sản phẩm khác nhau bằng cách sử dụng cùng một đối tượng builder.
-
-```golang
-// Director defines the construction process
-type Director struct {
-    builder HouseBuilder
-}
-
-func (d *Director) SetBuilder(builder HouseBuilder) {
-    d.builder = builder
-}
-
-func (d *Director) Construct() {
-    d.builder.BuildWalls()
-    d.builder.BuildDoors()
-    d.builder.BuildWindows()
-    d.builder.BuildRoof()
-}
-```
 
 5. Mã client tạo cả đối tượng builder và director. Trước khi xây dựng bắt đầu, client phải truyền đối tượng builder cho director. Thông thường, client thực hiện điều này một lần qua các tham số của constructor của lớp director. Director sử dụng đối tượng builder trong tất cả các lần xây dựng tiếp theo. Ngoài ra, builder có thể được truyền vào một phương thức sản xuất sản phẩm cụ thể của director.
 
-```golang
-package main
-
-import "fmt"
-
-func main() {
-    // Create a director
-    director := Director{}
-
-    // Build a wooden house
-    woodenBuilder := &WoodenHouseBuilder{}
-    director.SetBuilder(woodenBuilder)
-    director.Construct()
-    woodenHouse := woodenBuilder.GetHouse()
-    fmt.Println("Wooden House:", woodenHouse)
-
-    // Build a stone house
-    stoneBuilder := &StoneHouseBuilder{}
-    director.SetBuilder(stoneBuilder)
-    director.Construct()
-    stoneHouse := stoneBuilder.GetHouse()
-    fmt.Println("Stone House:", stoneHouse)
-}
-```
-
 6. Kết quả xây dựng có thể được lấy trực tiếp từ director nếu tất cả các sản phẩm tuân theo cùng một giao diện. Nếu không, client nên lấy kết quả từ builder.
-
-**Tóm tắt từng bước**
 
 ## 6. Golang Code
 [⬆ Back to Table of Contents](#table-of-contents)

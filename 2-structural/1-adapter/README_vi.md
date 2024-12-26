@@ -13,24 +13,24 @@ Popularity: &#9733; &#9733; &#9733;
 
 ## Table of Contents
 - [Adapter](#adapter)
-	- [Table of Contents](#table-of-contents)
-	- [1. Intent](#1-intent)
-	- [2. Problem](#2-problem)
-	- [3. Solution](#3-solution)
-	- [4. Structure](#4-structure)
-	- [5. How to Implement](#5-how-to-implement)
-		- [Example](#example)
-	- [6. Golang Code](#6-golang-code)
-	- [7. Applicability](#7-applicability)
-	- [8. Pros and Cons](#8-pros-and-cons)
-	- [9. Relations with Other Patterns](#9-relations-with-other-patterns)
+  - [Table of Contents](#table-of-contents)
+  - [1. Intent](#1-intent)
+  - [2. Problem](#2-problem)
+  - [3. Solution](#3-solution)
+  - [4. Structure](#4-structure)
+  - [5. How to Implement](#5-how-to-implement)
+    - [Example](#example)
+  - [6. Golang Code](#6-golang-code)
+  - [7. Applicability](#7-applicability)
+  - [8. Pros and Cons](#8-pros-and-cons)
+  - [9. Relations with Other Patterns](#9-relations-with-other-patterns)
 
 ## 1. Intent
 [⬆ Back to Table of Contents](#table-of-contents)
 
 **Adapter** là một structural design pattern cho phép các objects có interfaces không tương thích có thể hợp tác với nhau.
 
-![alt text](image.png)
+![alt text](images/image.png)
 
 ## 2. Problem
 [⬆ Back to Table of Contents](#table-of-contents)
@@ -39,7 +39,7 @@ Hãy tưởng tượng rằng bạn đang tạo một ứng dụng giám sát th
 
 Vào một lúc nào đó, bạn quyết định cải thiện ứng dụng bằng cách tích hợp một thư viện phân tích thông minh từ bên thứ ba. Tuy nhiên, có một vấn đề: thư viện này chỉ hoạt động với dữ liệu ở định dạng JSON.
 
-![alt text](image-1.png)
+![alt text](images/image-1.png)
 
 Bạn có thể thay đổi thư viện để làm việc với XML. Tuy nhiên, điều này có thể làm hỏng một số mã hiện có dựa vào thư viện. Tệ hơn nữa, bạn có thể không có quyền truy cập vào mã nguồn của thư viện, khiến cách tiếp cận này trở nên bất khả thi.
 
@@ -58,7 +58,7 @@ Adapters không chỉ chuyển đổi dữ liệu sang các định dạng khác
 
 Đôi khi, thậm chí có thể tạo một two-way adapter chuyển đổi các yêu cầu theo cả hai hướng.
 
-![alt text](image-2.png)
+![alt text](images/image-2.png)
 
 **Real-World Analogy**
 

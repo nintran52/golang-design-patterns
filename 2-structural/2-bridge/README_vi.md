@@ -11,23 +11,23 @@ Popularity: &#9733; &#9734; &#9734;
 
 ## Table of Contents
 - [Bridge](#bridge)
-	- [Table of Contents](#table-of-contents)
-	- [1. Intent](#1-intent)
-	- [2. Problem](#2-problem)
-	- [3. Solution](#3-solution)
-	- [4. Structure](#4-structure)
-	- [5. How to Implement](#5-how-to-implement)
-	- [6. Golang Code](#6-golang-code)
-	- [7. Applicability](#7-applicability)
-	- [8. Pros and Cons](#8-pros-and-cons)
-	- [9. Relations with Other Patterns](#9-relations-with-other-patterns)
+  - [Table of Contents](#table-of-contents)
+  - [1. Intent](#1-intent)
+  - [2. Problem](#2-problem)
+  - [3. Solution](#3-solution)
+  - [4. Structure](#4-structure)
+  - [5. How to Implement](#5-how-to-implement)
+  - [6. Golang Code](#6-golang-code)
+  - [7. Applicability](#7-applicability)
+  - [8. Pros and Cons](#8-pros-and-cons)
+  - [9. Relations with Other Patterns](#9-relations-with-other-patterns)
 
 ## 1. Intent
 [⬆ Back to Table of Contents](#table-of-contents)
 
 Bridge là một structural design pattern cho phép bạn chia một class lớn hoặc một tập hợp các class có quan hệ chặt chẽ thành hai hệ phân cấp riêng biệt—abstraction và implementation—có thể được phát triển độc lập với nhau.
 
-![alt text](image.png)
+![alt text](images/image.png)
 
 ## 2. Problem
 [⬆ Back to Table of Contents](#table-of-contents)
@@ -36,7 +36,7 @@ Abstraction? Implementation? Nghe có vẻ đáng sợ? Bình tĩnh, hãy xem x�
 
 Giả sử bạn có một Shape class hình học với một cặp subclass là: Circle và Square. Bạn muốn mở rộng hệ phân cấp này để kết hợp các màu sắc, vì vậy bạn dự định tạo các subclass như Red và Blue. Tuy nhiên, vì bạn đã có hai subclass, bạn sẽ cần tạo bốn tổ hợp class như BlueCircle và RedSquare.
 
-![alt text](image-1.png)
+![alt text](images/image-1.png)
 
 *Số lượng tổ hợp class tăng theo cấp số nhân*
 
@@ -49,7 +49,7 @@ Vấn đề này xảy ra bởi vì chúng ta đang cố gắng mở rộng các
 
 Bridge pattern cố gắng giải quyết vấn đề này bằng cách chuyển từ kế thừa sang object composition. Điều này có nghĩa là bạn tách một trong các chiều thành một hệ phân cấp class riêng biệt, để các class ban đầu sẽ tham chiếu đến một đối tượng của hệ phân cấp mới, thay vì chứa toàn bộ trạng thái và hành vi trong một class.
 
-![alt text](image-2.png)
+![alt text](images/image-2.png)
 
 *Bạn có thể ngăn chặn sự bùng nổ của hệ phân cấp class bằng cách biến nó thành một tập hợp các hệ phân cấp có liên quan.*
 
@@ -58,7 +58,7 @@ Với cách tiếp cận này, chúng ta có thể tách mã liên quan đến m
 ## 4. Structure
 [⬆ Back to Table of Contents](#table-of-contents)
 
-![alt text](image-3.png)
+![alt text](images/image-3.png)
 
 1. Abstraction: Cung cấp logic điều khiển cấp cao. Nó dựa vào đối tượng implementation để thực hiện công việc cấp thấp thực tế.
 2. Implementation: Khai báo interface chung cho tất cả các concrete implementation. Abstraction chỉ có thể giao tiếp với một đối tượng implementation thông qua các phương thức được khai báo ở đây.
@@ -79,134 +79,6 @@ Với cách tiếp cận này, chúng ta có thể tách mã liên quan đến m
 5. Trong lớp abstraction, thêm một reference field trỏ đến loại implementation. Abstraction sẽ ủy thác phần lớn công việc cho đối tượng implementation được tham chiếu trong trường này.
 6. Nếu bạn có nhiều biến thể của logic cấp cao, hãy tạo các refined abstractions cho từng biến thể bằng cách mở rộng abstraction class cơ bản.
 7. Mã client nên truyền một đối tượng implementation cho constructor của abstraction để liên kết chúng với nhau. Sau đó, client chỉ cần làm việc với đối tượng abstraction, không cần quan tâm đến implementation.
-
-**Tóm tắt từng bước**
-
-1. Xác định các chiều độc lập trong các class của bạn.
-- Các chiều độc lập:
-  - Abstraction: Đại diện cho các máy tính (Mac, Windows).
-  - Implementation: Đại diện cho các máy in (Epson, HP).
-
-- Abstraction:
-```go
-type Computer interface {
-    Print()
-    SetPrinter(Printer)
-}
-```
-
-- Implementation:
-```go
-type Printer interface {
-    PrintFile()
-}
-```
-2. Xác định các thao tác mà client cần và định nghĩa chúng trong lớp abstraction cơ bản.
-- Client cần hai thao tác:
-  - Print(): Thực hiện yêu cầu in.
-  - SetPrinter(Printer): Gán máy in cụ thể.
-```go
-type Computer interface {
-    Print()
-    SetPrinter(Printer)
-}
-```
-
-3. Xác định các thao tác khả dụng trên tất cả các platforms.
-- Implementation interface: Máy in cần hỗ trợ thao tác PrintFile() để xử lý in ấn.
-```go
-type Printer interface {
-    PrintFile()
-}
-```
-
-4. Đối với tất cả các platforms trong miền của bạn, hãy tạo các concrete implementation classes.
-- Concrete implementation cho máy in:
-  - Epson và Hp là các class cụ thể tuân theo Printer interface.
-
-- Epson:
-```go
-type Epson struct {}
-
-func (p *Epson) PrintFile() {
-    fmt.Println("Printing by a EPSON Printer")
-}
-```
-
-- Hp:
-```go
-type Hp struct {}
-
-func (p *Hp) PrintFile() {
-    fmt.Println("Printing by a HP Printer")
-}
-```
-
-5. Trong lớp abstraction, thêm một reference field trỏ đến loại implementation.
-- Abstraction (Computer) chứa một reference field trỏ đến Printer, để ủy thác công việc in ấn cho Printer.
-- Mac
-```go
-type Mac struct {
-    printer Printer
-}
-
-func (m *Mac) Print() {
-    fmt.Println("Print request for mac")
-    m.printer.PrintFile()
-}
-
-func (m *Mac) SetPrinter(p Printer) {
-    m.printer = p
-}
-```
-
-- Windowns
-```go
-type Windows struct {
-    printer Printer
-}
-
-func (w *Windows) Print() {
-    fmt.Println("Print request for windows")
-    w.printer.PrintFile()
-}
-
-func (w *Windows) SetPrinter(p Printer) {
-    w.printer = p
-}
-```
-
-6. Nếu bạn có nhiều biến thể của logic cấp cao, hãy tạo các refined abstractions.
-- Mac và Windows là các refined abstractions của Computer. Chúng mở rộng logic từ abstraction cơ bản và có thể hoạt động độc lập với các Printer implementations.
-
-- Mac và Windows được triển khai ở trên.
-
-7. Mã client nên truyền một đối tượng implementation cho constructor của abstraction.
-Client code truyền đối tượng Printer cụ thể vào SetPrinter của Computer. Sau đó, client chỉ cần làm việc với Computer mà không cần quan tâm chi tiết của Printer.
-```go
-func main() {
-    hpPrinter := &Hp{}
-    epsonPrinter := &Epson{}
-
-    macComputer := &Mac{}
-    macComputer.SetPrinter(hpPrinter)
-    macComputer.Print()
-    fmt.Println()
-
-    macComputer.SetPrinter(epsonPrinter)
-    macComputer.Print()
-    fmt.Println()
-
-    winComputer := &Windows{}
-    winComputer.SetPrinter(hpPrinter)
-    winComputer.Print()
-    fmt.Println()
-
-    winComputer.SetPrinter(epsonPrinter)
-    winComputer.Print()
-    fmt.Println()
-}
-```
 
 ## 6. Golang Code
 [⬆ Back to Table of Contents](#table-of-contents)
