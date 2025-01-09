@@ -3,31 +3,18 @@ package main
 
 import "fmt"
 
-// Bước 2: Khai báo interface collection và mô tả phương thức tạo iterator.
-// Kiểu trả về của phương thức phải là interface iterator.
-type Collection interface {
-	createIterator() Iterator
-}
-
-// userCollection.go: Concrete collection
-// Bước 4: Triển khai interface collection trong các lớp collection cụ thể.
-// Đối tượng collection phải chuyển chính nó vào constructor của iterator để tạo liên kết giữa chúng.
-type UserCollection struct {
-	users []*User
-}
-
-func (u *UserCollection) createIterator() Iterator {
-	return &UserIterator{
-		users: u.users,
-	}
-}
-
 // iterator.go: Iterator
 // Bước 1: Khai báo interface iterator với các phương thức để duyệt qua.
 // Phải có các phương thức kiểm tra phần tử tiếp theo và lấy phần tử đó.
 type Iterator interface {
 	hasNext() bool
 	getNext() *User
+}
+
+// Bước 2: Khai báo interface collection và mô tả phương thức tạo iterator.
+// Kiểu trả về của phương thức phải là interface iterator.
+type Collection interface {
+	createIterator() Iterator
 }
 
 // userIterator.go: Concrete iterator
@@ -52,6 +39,19 @@ func (u *UserIterator) getNext() *User {
 		return user
 	}
 	return nil
+}
+
+// userCollection.go: Concrete collection
+// Bước 4: Triển khai interface collection trong các lớp collection cụ thể.
+// Đối tượng collection phải chuyển chính nó vào constructor của iterator để tạo liên kết giữa chúng.
+type UserCollection struct {
+	users []*User
+}
+
+func (u *UserCollection) createIterator() Iterator {
+	return &UserIterator{
+		users: u.users,
+	}
 }
 
 // user.go: User struct (Client code sử dụng struct này)
